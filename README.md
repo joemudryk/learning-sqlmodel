@@ -27,6 +27,8 @@ pip install -r requirements
 python main.py
 ```
 
+After running the app, then navigate to http://0.0.0.0:8080 to interact with the API. 
+
 ## Challenge
 I have been looking into a few ORMs to use with FastAPI such as [ormar](https://github.com/collerek/ormar/) 
 and [tortoise-orm](https://github.com/tortoise/tortoise-orm). Then to my delight, 
