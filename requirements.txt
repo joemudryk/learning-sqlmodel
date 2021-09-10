@@ -1,8 +1,11 @@
+alembic==1.7.1
 asgiref==3.4.1
 click==8.0.1
 fastapi==0.68.1
 greenlet==1.1.1
 h11==0.12.0
+Mako==1.1.5
+MarkupSafe==2.0.1
 pydantic==1.8.2
 SQLAlchemy==1.4.23
 sqlalchemy2-stubs==0.0.2a15

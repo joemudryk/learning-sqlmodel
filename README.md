@@ -29,17 +29,38 @@ python main.py
 
 After running the app, then navigate to http://0.0.0.0:8080 to interact with the API. 
 
-## Challenge
-I have been looking into a few ORMs to use with FastAPI such as [ormar](https://github.com/collerek/ormar/) 
-and [tortoise-orm](https://github.com/tortoise/tortoise-orm). Then to my delight, 
-Sebastián Ramírez released [SQLModel](https://github.com/tiangolo/sqlmodel), 
-which looks like it has everything I was after (along with his great coding style and documentation).
+---
 
-Unfortunately I wasn't able to get database migrations working with my limited experience in that area.  
-I tried using [Alembic](https://alembic.sqlalchemy.org/en/latest/), but with no success. Any feedback or instructions 
-on how database migrations can be done with SQLModel, would be greatly appreciated.
+## Update a model and run a database migration 
+An example of using alembic to update the database keeping up to date with the models
 
-Databases I am intending to use are
-- SQLite
-- postgreSQL
-- CockroachDB
+### Update the model
+Example of updating a SQLModel
+```python
+class HeroBase(SQLModel):
+    name: str
+    secret_name: str
+    age: Optional[int] = None
+    power: Optional[str] = None                # New
+
+
+class Hero(HeroBase, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+```
+**Note:** Be sure that the new class variable is either Optional or has a default value. This is so alembic can back 
+populate entries in the database if needed.
+
+#### Also make sure the models you are using are imported in [migrations/env.py](migrations/env.py)
+
+### Autogenerate a new migration
+```bash
+python -m alembic revision --autogenerate -m "Add power to Hero model"
+```
+Or use the [autogenerate_migration.sh](scripts/autogenerate_migration.sh) script in the scripts directory, saves a bit of typing.
+### Apply the migration 
+```python
+python -m alembic upgrade head
+```
+
+## All done
+And Bob's your Aunty. A fairly simplistic way of using SQLModel with alembic :) 

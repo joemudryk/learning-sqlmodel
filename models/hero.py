@@ -7,7 +7,7 @@ class HeroBase(SQLModel):
     name: str
     secret_name: str
     age: Optional[int] = None
-    # power: str
+    power: Optional[str] = None
 
 
 class Hero(HeroBase, table=True):
